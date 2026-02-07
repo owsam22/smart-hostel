@@ -13,6 +13,7 @@ export interface User {
 
 
 export interface Issue {
+  _id: string; // ✅ MongoDB ID
   id: string; // ✅ MongoDB ID
   title: string;
   description: string;
