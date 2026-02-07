@@ -22,7 +22,7 @@ export interface Issue {
   visibility: 'public' | 'private';
   location?: string;
 
-  media?: string[]; // <--- Add this
+  media?: string[]; 
 
   reportedBy?: {
     _id: string;
@@ -77,20 +77,23 @@ export interface LostFoundItem {
   type: 'lost' | 'found';
   title: string;
   description: string;
-  category: string;
-  location: string;
+  category?: string;
+  location?: string;
   date: string;
+
   reportedBy: string;
-  reportedByUser: User;
+  reportedByUser?: User; // 🔥 OPTIONAL
+
   status: 'pending' | 'claimed' | 'closed';
-  media: string[];
+
   claimedBy?: string;
-  claimedByUser?: User;
+  claimedByUser?: User; // 🔥 OPTIONAL
   claimedAt?: string;
+
   createdAt: string;
   updatedAt: string;
-  comments: Comment[];
 }
+
 
 export interface Analytics {
   totalIssues: number;

@@ -10,7 +10,7 @@ const lostFoundSchema = new mongoose.Schema({
   reportedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   status: { type: String, enum: ['pending','claimed','closed'], default: 'pending' },
   claimedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  media: [String],
+  claimedAt: { type: Date }, // track when claimed
 }, { timestamps: true });
 
 export default mongoose.model('LostFound', lostFoundSchema);

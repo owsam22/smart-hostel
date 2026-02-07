@@ -4,11 +4,21 @@ import { LostFoundItem } from '@/types';
 
 const API = 'http://localhost:5000/api';
 
+// Frontend payload type for adding item
+export interface LostFoundInput {
+  title: string;
+  description: string;
+  type: 'lost' | 'found';
+  category: string;
+  location: string;
+  date: string;
+}
+
 interface LostFoundContextType {
   items: LostFoundItem[];
   fetchItems: () => Promise<void>;
-  addItem: (item: Omit<LostFoundItem, 'id' | 'createdAt' | 'updatedAt' | 'comments'>) => Promise<void>;
-  claimItem: (id: string, claimedBy: string) => Promise<void>;
+  addItem: (item: LostFoundInput) => Promise<void>;
+  claimItem: (id: string) => Promise<void>;
   getItems: (filters?: { type?: string; status?: string }) => LostFoundItem[];
 }
 
@@ -24,24 +34,24 @@ export const LostFoundProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [items, setItems] = useState<LostFoundItem[]>([]);
   const token = localStorage.getItem('token');
 
-  // Fetch items from backend and normalize _id -> id
+  // Fetch all items
   const fetchItems = async () => {
     try {
       const res = await axios.get(`${API}/lost-found`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const normalized: LostFoundItem[] = res.data.map((item: any) => ({
-        ...item,
-        id: item._id || item.id,
-        reportedByUser: {
-          ...item.reportedByUser,
-          id: item.reportedByUser._id || item.reportedByUser.id,
-        },
-        claimedByUser: item.claimedByUser
-          ? { ...item.claimedByUser, id: item.claimedByUser._id || item.claimedByUser.id }
-          : undefined,
-      }));
+const normalized: LostFoundItem[] = res.data.map((item: any) => ({
+  ...item,
+  id: item._id,
+  reportedByUser: item.reportedBy
+    ? { ...item.reportedBy, id: item.reportedBy._id }
+    : undefined,
+  claimedByUser: item.claimedBy
+    ? { ...item.claimedBy, id: item.claimedBy._id }
+    : undefined,
+}));
+
 
       setItems(normalized);
     } catch (err) {
@@ -49,14 +59,13 @@ export const LostFoundProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
   };
 
-  // Add new lost/found item
-  const addItem = async (itemData: Omit<LostFoundItem, 'id' | 'createdAt' | 'updatedAt' | 'comments'>) => {
+  // Add new item
+  const addItem = async (itemData: LostFoundInput) => {
     try {
       const res = await axios.post(`${API}/lost-found`, itemData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // normalize returned item
       const newItem: LostFoundItem = {
         ...res.data,
         id: res.data._id || res.data.id,
@@ -68,12 +77,12 @@ export const LostFoundProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
   };
 
-  // Claim an item
-  const claimItem = async (id: string, claimedBy: string) => {
+  // Claim item
+  const claimItem = async (id: string) => {
     try {
       const res = await axios.put(
         `${API}/lost-found/${id}/claim`,
-        { claimedBy },
+        {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

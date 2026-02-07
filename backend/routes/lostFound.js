@@ -1,13 +1,17 @@
 import express from 'express';
 import LostFound from '../models/LostFound.js';
-import { authenticateToken, authorizeRoles } from '../middleware/auth.js';
+import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
 // Get all lost/found items
 router.get('/', authenticateToken, async (req, res) => {
   try {
-    const items = await LostFound.find().populate('reportedByUser claimedByUser');
+    const items = await LostFound.find()
+      .populate('reportedBy', 'name email role')
+      .populate('claimedBy', 'name email role')
+      .sort({ createdAt: -1 });
+
     res.json(items);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -17,11 +21,15 @@ router.get('/', authenticateToken, async (req, res) => {
 // Create lost/found item
 router.post('/', authenticateToken, async (req, res) => {
   try {
-    const data = req.body;
-    data.reportedBy = req.user._id;
-    const item = await LostFound.create(data);
-    res.status(201).json(item);
+    const item = await LostFound.create({
+      ...req.body,
+      reportedBy: req.user.id, // 🔥 FIXED (token uses id, not _id)
+    });
+
+    const populated = await item.populate('reportedBy', 'name email role');
+    res.status(201).json(populated);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 });
@@ -33,11 +41,15 @@ router.put('/:id/claim', authenticateToken, async (req, res) => {
     if (!item) return res.status(404).json({ message: 'Item not found' });
 
     item.status = 'claimed';
-    item.claimedBy = req.user._id;
+    item.claimedBy = req.user.id;
     item.claimedAt = new Date();
     await item.save();
 
-    res.json(item);
+    const populated = await item
+      .populate('reportedBy', 'name email role')
+      .populate('claimedBy', 'name email role');
+
+    res.json(populated);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
