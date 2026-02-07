@@ -13,7 +13,7 @@ export interface User {
 
 
 export interface Issue {
-  _id: string; // ✅ MongoDB ID
+  id: string; // ✅ MongoDB ID
   title: string;
   description: string;
   category: 'plumbing' | 'electrical' | 'cleanliness' | 'internet' | 'furniture' | 'other';
@@ -21,7 +21,7 @@ export interface Issue {
   status: 'reported' | 'assigned' | 'in_progress' | 'resolved' | 'closed';
   visibility: 'public' | 'private';
   location?: string;
-
+  hostel: string;
   media?: string[]; 
 
   reportedBy?: {
