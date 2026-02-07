@@ -23,7 +23,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const API = 'https://smart-hostel-backend-rxm4.onrender.com/api';
+  const API = 'http://localhost:5000/api';
 
   const refreshUser = async () => {
     const token = localStorage.getItem('token');

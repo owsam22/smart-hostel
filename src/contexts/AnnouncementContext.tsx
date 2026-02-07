@@ -2,7 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Announcement } from '@/types';
 
-const API = 'https://smart-hostel-backend-rxm4.onrender.com/api';
+const API = 'http://localhost:5000/api';
+
 
 interface AnnouncementContextType {
   announcements: Announcement[];
