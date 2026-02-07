@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Issue } from '@/types';
 import { useAuth } from './AuthContext';
 
-const API = 'http://localhost:5000/api';
+const API = 'https://smart-hostel-backend-rxm4.onrender.com/api';
 
 interface IssueContextType {
   issues: Issue[];

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { LostFoundItem } from '@/types';
 
-const API = 'http://localhost:5000/api';
+const API = 'https://smart-hostel-backend-rxm4.onrender.com/api';
 
 // Frontend payload type for adding item
 export interface LostFoundInput {
