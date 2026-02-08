@@ -21,15 +21,23 @@ dotenv.config();
 
 const app = express();
 
+
 // Security middleware
 app.use(helmet());
 if (!process.env.FRONTEND_URL){
   throw new Error('FRONTEND_URL is not defined in environment variables');
 }
+
+
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true
 }));
+
+app.options('*', cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+})); // Enable CORS pre-flight for all routes
 
 // Rate limiting
 const limiter = rateLimit({
