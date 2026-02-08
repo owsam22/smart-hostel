@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { User } from '@/types';
+import API from './api';
 
 interface AuthContextType {
   user: User | null;
@@ -23,7 +24,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const API = 'http://localhost:5000/api';
 
   const refreshUser = async () => {
     const token = localStorage.getItem('token');

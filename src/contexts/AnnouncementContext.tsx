@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Announcement } from '@/types';
-
-const API = 'http://localhost:5000/api';
+import API from './api';
 
 
 interface AnnouncementContextType {

@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { LostFoundItem } from '@/types';
+import API from './api';
 
-const API = 'http://localhost:5000/api';
 
 // Frontend payload type for adding item
 export interface LostFoundInput {

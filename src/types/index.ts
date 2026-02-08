@@ -1,3 +1,11 @@
+interface ImportMetaEnv {
+  readonly VITE_API_URL:string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
 export interface User {
   _id?: string;
   id?: string;

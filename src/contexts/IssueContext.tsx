@@ -2,8 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Issue } from '@/types';
 import { useAuth } from './AuthContext';
+import API from './api';
 
-const API = 'http://localhost:5000/api';
 
 interface IssueContextType {
   issues: Issue[];
