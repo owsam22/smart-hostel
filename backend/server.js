@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// Routes
 import authRoutes from './routes/auth.js';
 import issueRoutes from './routes/issues.js';
 import announcementRoutes from './routes/announcements.js';
@@ -15,65 +16,52 @@ import analyticsRoutes from './routes/analytics.js';
 
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const app = express();
 
-/* ---------- Security ---------- */
+// 🔥 REQUIRED FOR RENDER / PROXY
+app.set('trust proxy', 1);
+
+// Security
 app.use(helmet());
 
-if (!process.env.FRONTEND_URL) {
-  throw new Error('FRONTEND_URL is not defined');
-}
-
+// CORS (strict, production-safe)
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.options('*', cors());
 
-/* ---------- Rate Limit ---------- */
-app.use('/api', rateLimit({
+// Rate limit (NOW SAFE)
+const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100
-}));
+  max: 100,
+});
+app.use('/api', limiter);
 
-/* ---------- Body Parsing ---------- */
-app.use(express.json({ limit: '10mb' }));
+// Body parsing
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/* ---------- Static ---------- */
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-/* ---------- DB ---------- */
+// MongoDB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
 
-/* ---------- Routes ---------- */
+// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/issues', issueRoutes);
 app.use('/api/announcements', announcementRoutes);
 app.use('/api/lost-found', lostFoundRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
+// Health
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+  res.json({ status: 'OK' });
 });
 
-/* ---------- Errors ---------- */
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(err.status || 500).json({
-    message: err.message || 'Server error'
-  });
-});
-
-app.use('*', (req, res) => {
+// 404
+app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
