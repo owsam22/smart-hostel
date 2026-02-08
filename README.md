@@ -144,11 +144,11 @@ VITE_API_URL=https://smart-hostel-backend-rxm4.onrender.com/api
 
 <div align="center">
 
-<a href="https://github.com/your-github-username">
+<a href="https://github.com/owsam22">
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" width="40" />
 </a>
 &nbsp;&nbsp;
-<a href="https://linkedin.com/in/your-linkedin-username">
+<a href="https://linkedin.com/in/samarpan22">
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linkedin/linkedin-original.svg" width="40" />
 </a>
 
