@@ -93,20 +93,69 @@ This is a **personal project** built to demonstrate strong full‑stack engineer
 ## 📁 Project Structure
 
 ```bash
-frontend/
- ├─ src/
- │  ├─ pages/
- │  ├─ components/
- │  ├─ contexts/
- │  ├─ types/
- │  └─ utils/
-
-backend/
- ├─ routes/
- ├─ models/
- ├─ middleware/
- ├─ config/
- └─ server.js
+├── 📁 .github
+│   └── 📁 appmod
+│       └── 📁 appcat
+├── 📁 backend
+│   ├── 📁 middleware
+│   │   ├── 📄 auth.js
+│   │   └── 📄 upload.js
+│   ├── 📁 models
+│   │   ├── 📄 Announcement.js
+│   │   ├── 📄 Issue.js
+│   │   ├── 📄 LostFound.js
+│   │   └── 📄 User.js
+│   ├── 📁 routes
+│   │   ├── 📄 analytics.js
+│   │   ├── 📄 announcements.js
+│   │   ├── 📄 auth.js
+│   │   ├── 📄 hash.js
+│   │   ├── 📄 issues.js
+│   │   └── 📄 lostFound.js
+│   ├── 📁 uploads
+│   │   ├── 📁 issues
+│   │   │   ├── 🖼️ example.jpeg
+│   │   │   └── 🖼️ example.png
+│   │   └── ⚙️ .gitkeep
+│   ├── ⚙️ package-lock.json
+│   ├── ⚙️ package.json
+│   └── 📄 server.js
+├── 📁 src
+│   ├── 📁 components
+│   │   ├── 📄 CreateAnnouncement.tsx
+│   │   ├── 📄 Layout.tsx
+│   │   └── 📄 ProtectedRoute.tsx
+│   ├── 📁 contexts
+│   │   ├── 📄 AnnouncementContext.tsx
+│   │   ├── 📄 AuthContext.tsx
+│   │   ├── 📄 IssueContext.tsx
+│   │   ├── 📄 LostFoundContext.tsx
+│   │   └── 📄 api.ts
+│   ├── 📁 pages
+│   │   ├── 📄 Analytics.tsx
+│   │   ├── 📄 Announcements.tsx
+│   │   ├── 📄 Dashboard.tsx
+│   │   ├── 📄 Issues.tsx
+│   │   ├── 📄 Login.tsx
+│   │   ├── 📄 LostFound.tsx
+│   │   ├── 📄 Profile.tsx
+│   │   ├── 📄 ReportIssue.tsx
+│   │   └── 📄 register.tsx
+│   ├── 📁 types
+│   │   └── 📄 index.ts
+│   ├── 📁 utils
+│   │   └── 📄 cn.ts
+│   ├── 📄 App.tsx
+│   ├── 🎨 index.css
+│   ├── 📄 main.tsx
+│   └── 📄 vite-env.d.ts
+├── ⚙️ .gitignore
+├── 📝 README.md
+├── 🌐 index.html
+├── ⚙️ package-lock.json
+├── ⚙️ package.json
+├── ⚙️ tsconfig.json
+└── 📄 vite.config.ts
 ```
 
 ---
