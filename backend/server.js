@@ -23,8 +23,11 @@ const app = express();
 
 // Security middleware
 app.use(helmet());
+if (!process.env.FRONTEND_URL){
+  throw new Error('FRONTEND_URL is not defined in environment variables');
+}
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
