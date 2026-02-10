@@ -20,7 +20,7 @@ const Home: React.FC = () => {
   const [backendState, setBackendState] = useState<BackendState>('idle');
   const [showLogin, setShowLogin] = useState(false);
 
-  const API = 'https://smart-hostel-backend-rxm4.onrender.com/api/';
+  const API = 'https://smart-hostel-backend-rxm4.onrender.com/api';
 
   const checkBackend = async () => {
     setBackendState('warming');
