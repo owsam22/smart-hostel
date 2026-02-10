@@ -5,7 +5,7 @@ import { AnnouncementProvider } from '@/contexts/AnnouncementContext';
 import { LostFoundProvider } from '@/contexts/LostFoundContext';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import Layout from '@/components/Layout';
-import Login from '@/pages/Login';
+import Login from '@/pages/Home';
 import Register from '@/pages/register';
 import Dashboard from '@/pages/Dashboard';
 import Issues from '@/pages/Issues';
