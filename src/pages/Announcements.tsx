@@ -12,7 +12,7 @@ import {
 import CreateAnnouncement from '@/components/CreateAnnouncement';
 
 const Announcements: React.FC = () => {
-  const { announcements = [] } = useAnnouncements(); // SAFETY
+  const { announcements = [] } = useAnnouncements();
   const { user } = useAuth();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -21,7 +21,6 @@ const Announcements: React.FC = () => {
 
   const filteredAnnouncements = announcements.filter((announcement) => {
     if (!announcement) return false;
-
     const title = announcement.title ?? '';
     const content = announcement.content ?? '';
 
@@ -29,8 +28,7 @@ const Announcements: React.FC = () => {
       title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       content.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesType =
-      typeFilter === 'all' || announcement.type === typeFilter;
+    const matchesType = typeFilter === 'all' || announcement.type === typeFilter;
 
     const matchesTarget =
       !announcement.targetHostel ||
@@ -53,17 +51,18 @@ const Announcements: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 px-4 md:px-0 pb-8">
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Announcements</h1>
-          <p className="text-gray-600">Stay updated with hostel news and notices</p>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900">Announcements</h1>
+          <p className="text-sm md:text-base text-gray-600">Stay updated with hostel news</p>
         </div>
 
         {user?.role === 'management' && (
           <button
             onClick={() => setShowForm(prev => !prev)}
-            className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 w-full sm:w-auto transition-colors"
           >
             {showForm ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
             {showForm ? 'Close Form' : 'New Announcement'}
@@ -71,10 +70,15 @@ const Announcements: React.FC = () => {
         )}
       </div>
 
-      {showForm && <CreateAnnouncement />}
+      {showForm && (
+        <div className="bg-gray-50 rounded-lg border border-gray-200 p-1">
+           <CreateAnnouncement />
+        </div>
+      )}
 
-      <div className="rounded-lg bg-white p-4 shadow">
-        <div className="flex flex-col gap-4 md:flex-row">
+      {/* Filter Bar */}
+      <div className="rounded-lg bg-white p-3 md:p-4 shadow-sm border border-gray-100">
+        <div className="flex flex-col gap-3 md:flex-row">
           <div className="flex-1">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -83,7 +87,7 @@ const Announcements: React.FC = () => {
                 placeholder="Search announcements..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2"
+                className="w-full rounded-lg border border-gray-300 pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               />
             </div>
           </div>
@@ -91,7 +95,7 @@ const Announcements: React.FC = () => {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="rounded-lg border border-gray-300 px-4 py-2"
+            className="rounded-lg border border-gray-300 px-4 py-2 text-sm bg-white outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="all">All Types</option>
             <option value="general">General</option>
@@ -104,62 +108,67 @@ const Announcements: React.FC = () => {
         </div>
       </div>
 
+      {/* Announcements List */}
       <div className="space-y-4">
         {filteredAnnouncements.map((announcement) => (
-          <div key={announcement.id} className="rounded-lg bg-white p-6 shadow">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900">
-                      {announcement.title}
-                    </h3>
-                    <p className="mt-2 text-gray-600">
-                      {announcement.content}
-                    </p>
-                  </div>
+          <div key={announcement.id} className="relative rounded-lg bg-white p-5 md:p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            
 
-                  <span className={`ml-4 rounded-full px-3 py-1 text-xs font-medium ${getTypeColor(announcement.type)}`}>
-                    {announcement.type?.replace('_', ' ')}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-start justify-between gap-2">
+                <div className="pr-8"> {/* Padding to prevent text overlap with delete icon */}
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 leading-tight">
+                    {announcement.title}
+                  </h3>
+                </div>
+                <span className={`whitespace-nowrap rounded-full px-2.5 py-0.5 text-[10px] md:text-xs font-medium border ${getTypeColor(announcement.type)}`}>
+                  {announcement.type?.replace('_', ' ')}
+                </span>
+              </div>
+              
+              <p className="text-sm md:text-base text-gray-600 mt-1 line-clamp-3 md:line-clamp-none">
+                {announcement.content}
+              </p>
+
+              <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] md:text-sm text-gray-500 border-t pt-4">
+                <div className="flex items-center">
+                  <Megaphone className="mr-1.5 h-3.5 w-3.5" />
+                  <span className="truncate max-w-[100px] md:max-w-none">
+                    {announcement.createdByUser?.name ?? 'Management'}
                   </span>
                 </div>
 
-                <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                  <div className="flex items-center">
-                    <Megaphone className="mr-1 h-4 w-4" />
-                    {announcement.createdByUser?.name ?? 'Management'}
-                  </div>
-
-                  <div className="flex items-center">
-                    <Calendar className="mr-1 h-4 w-4" />
-                    {announcement.createdAt
-                      ? new Date(announcement.createdAt).toLocaleDateString()
-                      : '—'}
-                  </div>
-
-                  <div className="flex items-center">
-                    <MessageSquare className="mr-1 h-4 w-4" />
-                    {announcement.comments?.length ?? 0} comments
-                  </div>
-
-                  {announcement.targetHostel && (
-                    <span className="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
-                      Target: {announcement.targetHostel}
-                    </span>
-                  )}
+                <div className="flex items-center">
+                  <Calendar className="mr-1.5 h-3.5 w-3.5" />
+                  {announcement.createdAt
+                    ? new Date(announcement.createdAt).toLocaleDateString()
+                    : '—'}
                 </div>
+
+                <div className="flex items-center">
+                  <MessageSquare className="mr-1.5 h-3.5 w-3.5" />
+                  {announcement.comments?.length ?? 0}
+                  <span className="hidden xs:inline ml-1">comments</span>
+                </div>
+
+                {announcement.targetHostel && (
+                  <span className="rounded bg-gray-100 px-2 py-0.5 text-[10px] font-medium text-gray-600 border border-gray-200">
+                    {announcement.targetHostel}
+                  </span>
+                )}
               </div>
             </div>
           </div>
         ))}
       </div>
 
+      {/* Empty State */}
       {filteredAnnouncements.length === 0 && (
-        <div className="rounded-lg bg-white p-12 text-center shadow">
-          <Megaphone className="mx-auto h-12 w-12 text-gray-400" />
-          <h3 className="mt-2 text-sm font-medium text-gray-900">No announcements</h3>
-          <p className="mt-1 text-sm text-gray-500">
-            No announcements found matching your criteria.
+        <div className="rounded-lg bg-white p-10 md:p-16 text-center shadow-sm border border-dashed border-gray-300">
+          <Megaphone className="mx-auto h-10 w-10 text-gray-300" />
+          <h3 className="mt-4 text-sm font-medium text-gray-900">No announcements</h3>
+          <p className="mt-1 text-xs md:text-sm text-gray-500">
+            Check back later for updates or adjust your filters.
           </p>
         </div>
       )}
