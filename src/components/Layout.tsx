@@ -41,7 +41,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <div className="flex h-full flex-col">
           {/* Logo Section */}
           <div className="flex h-16 items-center justify-between border-b px-6">
-            <h1 className="text-xl font-bold text-blue-600">Hostel Track</h1>
+            <a href="/dashboard">
+              <h1 className="text-xl font-bold text-blue-600">Hostel Track</h1>
+            </a>
             <button className="lg:hidden" onClick={() => setIsMobileMenuOpen(false)}>
               <X className="h-6 w-6 text-gray-500" />
             </button>
