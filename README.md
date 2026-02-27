@@ -171,13 +171,13 @@ This is a **personal project** built to demonstrate strong full‑stack engineer
 ```env
 MONGODB_URI=your_mongodb_atlas_uri
 JWT_SECRET=your_secure_secret
-FRONTEND_URL=YOUR_FRONTEND_URL
+FRONTEND_URL=YOUR_FRONTEND_URL_DEPLOYED
 ```
 
 ### Frontend
 
 ```env
-VITE_API_URL=YOUR_BACKEND_URL/api
+VITE_API_URL=YOUR_BACKEND_URL_DEPLOYED/api
 ```
 
 ---
