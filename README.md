@@ -96,6 +96,8 @@ This is a **personal project** built to demonstrate strong full‑stack engineer
 ├── 📁 .github
 │   └── 📁 appmod
 │       └── 📁 appcat
+├── 📁 assets
+│   └── 🖼️ smart-hostel-logo.png
 ├── 📁 backend
 │   ├── 📁 middleware
 │   │   ├── 📄 auth.js
@@ -114,8 +116,8 @@ This is a **personal project** built to demonstrate strong full‑stack engineer
 │   │   └── 📄 lostFound.js
 │   ├── 📁 uploads
 │   │   ├── 📁 issues
-│   │   │   ├── 🖼️ example.jpeg
-│   │   │   └── 🖼️ example.png
+│   │   │   ├── 🖼️ img1.jpeg
+│   │   │   └── 🖼️ img2.png
 │   │   └── ⚙️ .gitkeep
 │   ├── ⚙️ package-lock.json
 │   ├── ⚙️ package.json
@@ -124,6 +126,7 @@ This is a **personal project** built to demonstrate strong full‑stack engineer
 │   ├── 📁 components
 │   │   ├── 📄 CreateAnnouncement.tsx
 │   │   ├── 📄 Layout.tsx
+│   │   ├── 📄 LoginForm.tsx
 │   │   └── 📄 ProtectedRoute.tsx
 │   ├── 📁 contexts
 │   │   ├── 📄 AnnouncementContext.tsx
@@ -135,6 +138,7 @@ This is a **personal project** built to demonstrate strong full‑stack engineer
 │   │   ├── 📄 Analytics.tsx
 │   │   ├── 📄 Announcements.tsx
 │   │   ├── 📄 Dashboard.tsx
+│   │   ├── 📄 Home.tsx
 │   │   ├── 📄 Issues.tsx
 │   │   ├── 📄 Login.tsx
 │   │   ├── 📄 LostFound.tsx
