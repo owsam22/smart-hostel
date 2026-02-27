@@ -167,13 +167,13 @@ This is a **personal project** built to demonstrate strong full‑stack engineer
 ```env
 MONGODB_URI=your_mongodb_atlas_uri
 JWT_SECRET=your_secure_secret
-FRONTEND_URL=https://smart-hostel-6q9b.onrender.com
+FRONTEND_URL=YOUR_FRONTEND_URL
 ```
 
 ### Frontend
 
 ```env
-VITE_API_URL=https://smart-hostel-backend-rxm4.onrender.com/api
+VITE_API_URL=YOUR_BACKEND_URL/api
 ```
 
 ---
